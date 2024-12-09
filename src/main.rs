@@ -42,23 +42,19 @@ struct Player {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Path to FM24 exported CSV file
+    
     #[arg(short, long)]
     file: PathBuf,
 
-    /// Maximum age to consider
     #[arg(short, long, default_value = "23")]
     max_age: u8,
 
-    /// Maximum value in millions
     #[arg(short, long, default_value = "5.0")]
     max_value: f64,
-
-    /// Minimum potential ability (0-200)
+    
     #[arg(short, long, default_value = "130")]
     min_potential: u8,
 
-    /// Position to search for
     #[arg(short, long)]
     position: String,
 }
@@ -103,7 +99,6 @@ impl Player {
         let potential_score = self.potential_ability as f64 / 200.0;
         let value_score = 1.0 - (self.value.min(50_000_000.0) / 50_000_000.0);
         
-        // Weighted average of scores
         (attribute_score * 0.4) + (potential_score * 0.4) + (value_score * 0.2)
     }
 }
